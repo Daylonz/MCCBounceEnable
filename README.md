@@ -1,6 +1,7 @@
 # MCCBounceEnable
 A program that alters the tick rate of Halo 2 Classic in Halo:MCC to enable super bouncing.
 This program utilizes memory pattern searching to ensure that any updates to Halo:MCC will not break this tool.
+This tool was created after seeing complaints of an existing tool (MCCbounce) that was breaking with hardcoded memory addresses.
 
 [Bounce Demo](https://gfycat.com/totaldarlingcirriped)
 
