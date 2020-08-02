@@ -7,7 +7,7 @@ This tool calculates addresses at runtime.
 [Bounce Demo](https://gfycat.com/totaldarlingcirriped)
 
 ## Download
-[Download](https://drive.google.com/file/d/1fn04J53QILqpXK5MP5dx_UsxU4VKA3Eh/edit) - Last Updated 7/27/2020
+[Download](https://github.com/Daylonz/MCCBounceEnable/releases/) - Last Updated 8/1/2020
 
 ## Warning
 This program is not meant to be used with the MCC anticheat. Please ensure that EAC is disabled by selecting the second launch option at runtime.
