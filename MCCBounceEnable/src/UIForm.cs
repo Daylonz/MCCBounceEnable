@@ -17,8 +17,6 @@ namespace MCCBounceEnable
     public partial class UIForm : Form
     {
         public readonly IMemoryPattern test = new DwordPattern("48 8B 0D ?? ?? ?? ?? F3 0F 10 49 10");
-        public readonly IMemoryPattern tickRate60 = new DwordPattern("3C 00 89 88 88 3C");
-        public readonly IMemoryPattern tickRate30 = new DwordPattern("1E 00 89 88 08 3D");
 
         byte[] value30 = { 0x1E, 0x00, 0x89, 0x88, 0x08, 0x3D };
         byte[] value60 = { 0x3C, 0x00, 0x89, 0x88, 0x88, 0x3C };
@@ -31,14 +29,16 @@ namespace MCCBounceEnable
         private static ProcessSharp getProcess()
         {
             var MCCProcess = System.Diagnostics.Process.GetProcessesByName("MCC-Win64-Shipping").FirstOrDefault();
-            if (MCCProcess == null)
+            var MCCProcessWinStore = System.Diagnostics.Process.GetProcessesByName("MCC-Win64-Shipping-WinStore").FirstOrDefault();
+            if (MCCProcess == null && MCCProcessWinStore == null)
             {
                 MessageBox.Show("Could not locate process. Please ensure MCC is running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(1);
             }
+            if (MCCProcess != null)
+                return new ProcessSharp("MCC-Win64-Shipping", MemoryType.Remote);
 
-            var process = new ProcessSharp("MCC-Win64-Shipping", MemoryType.Remote);
-            return process;
+            return new ProcessSharp("MCC-Win64-Shipping-WinStore", MemoryType.Remote);
         }
 
         public void setTickrate(int desired)
