@@ -8,6 +8,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 using Process.NET;
 using Process.NET.Memory;
 using Process.NET.Patterns;
@@ -60,11 +61,13 @@ namespace MCCBounceEnable
             if (desired == 30)
             {
                 process.Memory.Write(tickAddress, value30);
+                MessageBox.Show("Tick rate set to 30.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             if (desired == 60)
             {
                 process.Memory.Write(tickAddress, value60);
+                MessageBox.Show("Tick rate set to 60.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
