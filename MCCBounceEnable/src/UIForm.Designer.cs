@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UIForm));
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // checkBox1
@@ -71,11 +73,17 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(60, 175);
+            this.label3.Location = new System.Drawing.Point(49, 163);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(188, 13);
+            this.label3.Size = new System.Drawing.Size(188, 26);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Daylon#0001 on Discord for questions";
+            this.label3.Text = "Alt + O: Quick Toggle\r\nDaylon#0001 on Discord for questions";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // UIForm
             // 
@@ -100,6 +108,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
