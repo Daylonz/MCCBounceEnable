@@ -7,12 +7,14 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using log4net;
 using Process.NET;
 using Process.NET.Memory;
 using Process.NET.Patterns;
+using SharpDX.XInput;
 
 namespace MCCBounceEnable
 {
@@ -25,6 +27,9 @@ namespace MCCBounceEnable
         private static readonly int VK_O = 0x4F; //O key.
         private DateTime lastHotkeyPress = DateTime.Now;
 
+        Controller controller = null;
+        Gamepad gamepad;
+
         public readonly IMemoryPattern test = new DwordPattern("48 8B 0D ?? ?? ?? ?? F3 0F 10 49 10");
         private IntPtr lastAddr = IntPtr.Zero;
 
@@ -34,6 +39,15 @@ namespace MCCBounceEnable
         public UIForm()
         {
             InitializeComponent();
+            var controllers = new[] { new Controller(UserIndex.One), new Controller(UserIndex.Two), new Controller(UserIndex.Three), new Controller(UserIndex.Four) };
+            foreach (var selectControler in controllers)
+            {
+                if (selectControler.IsConnected)
+                {
+                    controller = selectControler;
+                    break;
+                }
+            }
         }
 
         private static ProcessSharp getProcess()
@@ -136,7 +150,7 @@ namespace MCCBounceEnable
                 setTickrate(60);
             }
         }
-        
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             short keyState1 = GetAsyncKeyState(VK_MENU);
@@ -145,7 +159,9 @@ namespace MCCBounceEnable
             bool altIsPressed = ((keyState1 >> 15) & 0x0001) == 0x0001;
             bool oIsPressed = ((keyState2 >> 15) & 0x0001) == 0x0001;
 
-            if (altIsPressed && oIsPressed)
+            var state = controller.GetState();
+            if ((state.Gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && state.Gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
+                || (altIsPressed && oIsPressed))
             {
                 if (DateTime.Now.Subtract(lastHotkeyPress).TotalSeconds > 1)
                 {

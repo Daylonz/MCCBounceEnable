@@ -73,11 +73,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(49, 163);
+            this.label3.Location = new System.Drawing.Point(49, 151);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(188, 26);
+            this.label3.Size = new System.Drawing.Size(188, 39);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Alt + O: Quick Toggle\r\nDaylon#0001 on Discord for questions";
+            this.label3.Text = "(Alt + O) or (LB + RB): Quick Toggle\r\n\r\nDaylon#0001 on Discord for questions";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // timer1
