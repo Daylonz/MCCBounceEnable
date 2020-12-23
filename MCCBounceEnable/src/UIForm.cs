@@ -28,9 +28,8 @@ namespace MCCBounceEnable
         private DateTime lastHotkeyPress = DateTime.Now;
 
         Controller controller = null;
-        Gamepad gamepad;
 
-        public readonly IMemoryPattern test = new DwordPattern("48 8B 0D ?? ?? ?? ?? F3 0F 10 49 10");
+        public readonly IMemoryPattern test = new DwordPattern("48 8B 05 ?? ?? ?? ?? F3 0F 10 40 04 C3 CC CC CC 48 8B 05");
         private IntPtr lastAddr = IntPtr.Zero;
 
         byte[] value30 = { 0x1E, 0x00, 0x89, 0x88, 0x08, 0x3D };
