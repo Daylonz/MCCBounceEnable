@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using log4net;
 using Process.NET;
 using Process.NET.Memory;
 using Process.NET.Patterns;
@@ -38,6 +32,11 @@ namespace MCCBounceEnable
         public UIForm()
         {
             InitializeComponent();
+            checkForController();
+        }
+
+        private void checkForController()
+        {
             var controllers = new[] { new Controller(UserIndex.One), new Controller(UserIndex.Two), new Controller(UserIndex.Three), new Controller(UserIndex.Four) };
             foreach (var selectControler in controllers)
             {
@@ -158,24 +157,35 @@ namespace MCCBounceEnable
             bool altIsPressed = ((keyState1 >> 15) & 0x0001) == 0x0001;
             bool oIsPressed = ((keyState2 >> 15) & 0x0001) == 0x0001;
 
-            var state = controller.GetState();
-            if ((state.Gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && state.Gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
-                || (altIsPressed && oIsPressed))
+            if (controller == null)
             {
-                if (DateTime.Now.Subtract(lastHotkeyPress).TotalSeconds > 1)
+                checkForController();
+            }
+
+            try
+            {
+                if ((controller != null && controller.GetState().Gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder) && controller.GetState().Gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder))
+                || (altIsPressed && oIsPressed))
                 {
-                    if (checkBox1.Checked)
+                    if (DateTime.Now.Subtract(lastHotkeyPress).TotalSeconds > 1)
                     {
-                        setTickrate(30);
+                        if (checkBox1.Checked)
+                        {
+                            setTickrate(30);
+                        }
+                        else
+                        {
+                            setTickrate(60);
+                        }
+                        checkBox1.Checked = !checkBox1.Checked;
+                        SystemSounds.Asterisk.Play();
+                        lastHotkeyPress = DateTime.Now;
                     }
-                    else
-                    {
-                        setTickrate(60);
-                    }
-                    checkBox1.Checked = !checkBox1.Checked;
-                    System.Media.SystemSounds.Asterisk.Play();
-                    lastHotkeyPress = DateTime.Now;
                 }
+            }
+            catch (SharpDX.SharpDXException)
+            {
+                controller = null;
             }
         }
     }
