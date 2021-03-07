@@ -232,7 +232,7 @@ namespace MCCBounceEnable
                     {
                         toggleWireFrame(!checkBox2.Checked);
                         checkBox2.Checked = !checkBox2.Checked;
-                        SystemSounds.Asterisk.Play();
+                        SystemSounds.Hand.Play();
                         lastHotkeyPress = DateTime.Now;
                     }
                 }
@@ -241,6 +241,11 @@ namespace MCCBounceEnable
             {
                 controller = null;
             }
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            toggleWireFrame(checkBox2.Checked);
         }
     }
 }
