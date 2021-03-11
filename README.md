@@ -1,4 +1,7 @@
 # MCCBounceEnable
+[![Github all releases](https://img.shields.io/github/downloads/Daylonz/MCCBounceEnable/total.svg)](https://github.com/Daylonz/MCCBounceEnable/releases)
+[![Discord](https://img.shields.io/discord/805503032107204638.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/8qP3RZBw53)
+
 A program that alters the tick rate of Halo 2 Classic in Halo:MCC to enable super bouncing.
 This program utilizes memory pattern matching to ensure that any updates to Halo:MCC will not cause it to malfunction.
 This tool was created after seeing complaints of an existing tool (MCCbounce) that was breaking with hardcoded memory addresses.
@@ -7,7 +10,7 @@ This tool calculates addresses at runtime.
 [Bounce Demo](https://gfycat.com/totaldarlingcirriped)
 
 ## Download
-[Download](https://github.com/Daylonz/MCCBounceEnable/releases/) - Last Updated 8/1/2020
+[Download](https://github.com/Daylonz/MCCBounceEnable/releases/) - Last Updated 3/7/2021
 
 ## Warning
 This program is not meant to be used with the MCC anticheat. Please ensure that EAC is disabled by selecting the second launch option at runtime.
