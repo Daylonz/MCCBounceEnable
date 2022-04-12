@@ -20,6 +20,7 @@ namespace MCCBounceEnable
         private static readonly int VK_MENU = 0x12; //Alt key.
         private static readonly int VK_O = 0x4F; //O key.
         private static readonly int VK_W = 0x57; //W key.
+        private static readonly String[] PROCESS_NAMES = {"MCC-Win64-Shipping", "MCC-Win64-Shipping-WinStore", "MCCWinStore-Win64-Shipping"};
         private DateTime lastHotkeyPress = DateTime.Now;
 
         Controller controller = null;
@@ -54,17 +55,18 @@ namespace MCCBounceEnable
 
         private static ProcessSharp getProcess()
         {
-            var MCCProcess = System.Diagnostics.Process.GetProcessesByName("MCC-Win64-Shipping").FirstOrDefault();
-            var MCCProcessWinStore = System.Diagnostics.Process.GetProcessesByName("MCC-Win64-Shipping-WinStore").FirstOrDefault();
-            if (MCCProcess == null && MCCProcessWinStore == null)
+            System.Diagnostics.Process MCCProcess;
+            foreach (String processName in PROCESS_NAMES)
             {
-                MessageBox.Show("Could not locate process. Please ensure MCC is running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Environment.Exit(1);
+                MCCProcess = System.Diagnostics.Process.GetProcessesByName(processName).FirstOrDefault();
+                if (MCCProcess != null)
+                {
+                    return new ProcessSharp(processName, MemoryType.Remote);
+                }
             }
-            if (MCCProcess != null)
-                return new ProcessSharp("MCC-Win64-Shipping", MemoryType.Remote);
-
-            return new ProcessSharp("MCC-Win64-Shipping-WinStore", MemoryType.Remote);
+            MessageBox.Show("Could not locate process. Please ensure MCC is running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Environment.Exit(1);
+            return null;
         }
 
         public void setTickrate(int desired)
@@ -128,11 +130,12 @@ namespace MCCBounceEnable
 
         public void toggleWireFrame(bool activate)
         {
+            MessageBox.Show("This feature has been temporarily disabled.", "Disabled", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
             try
             {
                 var process = getProcess();
                 process.Memory = new ExternalProcessMemory(process.Handle);
-                byte[] addressValue;
                 if (lastWFAddr == IntPtr.Zero)
                 {
                     PatternScanner scanner = new PatternScanner(process["halo2.dll"]);
