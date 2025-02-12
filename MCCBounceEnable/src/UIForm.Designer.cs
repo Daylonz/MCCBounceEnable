@@ -77,10 +77,10 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(74, 178);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(188, 78);
+            this.label3.Size = new System.Drawing.Size(168, 91);
             this.label3.TabIndex = 3;
             this.label3.Text = "Bounce (KBM): (Alt + O)\r\nBounce (Controller): (LB + RB)\r\n\r\nWireframe (KBM): (Alt " +
-    "+ W)\r\n\r\nDaylon#0001 on Discord for questions";
+    "+ W)\r\nBounce (Controller): (LB + Y)\r\n\r\n@Daylon on Discord for questions";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // timer1
@@ -114,7 +114,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(301, 260);
+            this.ClientSize = new System.Drawing.Size(301, 281);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.label3);

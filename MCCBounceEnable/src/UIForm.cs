@@ -26,13 +26,15 @@ namespace MCCBounceEnable
         Controller controller = null;
 
         public readonly IMemoryPattern tickRatePattern = new DwordPattern("48 8B 05 ?? ?? ?? ?? F3 0F 10 40 04 C3 CC CC CC 48 8B 05");
-        public readonly IMemoryPattern wireFramePattern = new DwordPattern("BB 02 00 00 00 0F B6");
+        public readonly IMemoryPattern wireFramePattern = new DwordPattern("F6 D8 1B D2 83 C2");
 
         private IntPtr lastTRAddr = IntPtr.Zero;
         private IntPtr lastWFAddr = IntPtr.Zero;
 
         byte[] value30 = { 0x1E, 0x00, 0x89, 0x88, 0x08, 0x3D };
         byte[] value60 = { 0x3C, 0x00, 0x89, 0x88, 0x88, 0x3C };
+        byte[] wireframeOn = { 0x02 };
+        byte[] wireframeOff = { 0x03 };
 
         public UIForm()
         {
@@ -130,8 +132,6 @@ namespace MCCBounceEnable
 
         public void toggleWireFrame(bool activate)
         {
-            MessageBox.Show("This feature has been temporarily disabled.", "Disabled", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            return;
             try
             {
                 var process = getProcess();
@@ -145,18 +145,16 @@ namespace MCCBounceEnable
                         MessageBox.Show("Could not find wire frame in memory. Make sure you're in a game!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                    byte[] offset = process.Memory.Read(result.ReadAddress + 8, 4);
-                    IntPtr addressLocation = (result.ReadAddress + 12 + BitConverter.ToInt32(offset, 0));
-                    lastWFAddr = addressLocation;
+                    lastWFAddr = result.ReadAddress + 6;
                 }
 
                 if (activate)
                 {
-                    process.Memory.Write(lastWFAddr, 1);
+                    process.Memory.Write(lastWFAddr, wireframeOn);
                 }
                 else
                 {
-                    process.Memory.Write(lastWFAddr, 0);
+                    process.Memory.Write(lastWFAddr, wireframeOff);
                 }
             }
             catch (Win32Exception e)
@@ -229,7 +227,8 @@ namespace MCCBounceEnable
                     }
                 }
 
-                if (altIsPressed && wIsPressed)
+                if ((controller != null && controller.GetState().Gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder) && controller.GetState().Gamepad.Buttons.HasFlag(GamepadButtonFlags.Y))
+                || (altIsPressed && wIsPressed))
                 {
                     if (DateTime.Now.Subtract(lastHotkeyPress).TotalSeconds > 1)
                     {

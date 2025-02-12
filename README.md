@@ -7,7 +7,7 @@ This program utilizes memory pattern matching to ensure that any updates to Halo
 This tool was created after seeing complaints of an existing tool (MCCbounce) that was breaking with hardcoded memory addresses.
 This tool calculates addresses at runtime.
 
-[Bounce Demo](https://gfycat.com/totaldarlingcirriped)
+[Setup & Bounce Demo](https://www.youtube.com/watch?v=NKpG1bGcPYk&t=1s)
 
 ## Download
 [Download](https://github.com/Daylonz/MCCBounceEnable/releases/) - Last Updated 3/7/2021
@@ -21,4 +21,4 @@ The following is my analysis of how and why this works the way it does. This has
 One of the many reasons people play Halo 2 is for the nostalgia of playing the game everyone used to know and love as a kid. In the original Halo 2, the Xbox was capped at 30 frames per second. This meant that the physics engine of the game was also running at 30 ticks per second to match the frame rate. Porting the original game to PC allowed the developers to increase the frame rate and tick rate to 60. This means that the physics engine can match the increased frame rate of 60 frames per second on the Xbox One/PC. Super bounces originally worked because 30 ticks allows for a large enough gap in-between each tick so that if a player hits a surface hard enough and their player falls slightly into a crack of the mesh, the engine will detect this and attempt to "bounce" the player out of the mesh. In certain instances, this can result in the player being bounced very high distances and allows for players to reach parts of the map that aren't normally able to be reached. The increased tick rate of 60 allows for more "checks" per second and it becomes increasingly more difficult to manipulate the physics engine like you were once able to a kid. Dropping the tick rate back down to 30 allows for super bounces to be achieved on PC.
 
 ## Requirements
-.NET Framework 4.6.1
+.NET Framework 4.8
